@@ -251,14 +251,7 @@ async function consturctServer(moduleDefs) {
         const moduleResponse = await moduleDef.module(query, (...params) => {
           // 参数注入客户端IP
           const obj = [...params]
-          let ip = req.ip
-
-          if (ip.substr(0, 7) == '::ffff:') {
-            ip = ip.substr(7)
-          }
-          if (ip == '::1') {
-            ip = global.cnIp
-          }
+          let ip = '116.25.146.177'; // 彻底写死为国内深圳电信 IP
           // console.log(ip)
           obj[3] = {
             ...obj[3],
