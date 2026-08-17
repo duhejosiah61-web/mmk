@@ -9,7 +9,7 @@ const path = require('path')
 const os = require('os')
 const chooseUserAgent = require('./chooseUserAgent')
 
-// 安全读取 anonymous_token，防止 Vercel 抛出 ENOENT 崩溃
+// 安全读取 anonymous_token
 let anonymous_token = ''
 try {
   const tokenPath = path.resolve(os.tmpdir(), 'anonymous_token')
@@ -20,18 +20,6 @@ try {
   anonymous_token = ''
 }
 
-// 资源别名映射
-const resourceTypeMap = {
-  0: 'R_SO_4_',
-  1: 'R_MV_5_',
-  2: 'A_PR_11_',
-  3: 'R_RM_50_',
-  4: 'A_DJ_1_',
-  5: 'R_VI_62_',
-  6: 'A_EV_2_',
-  7: 'A_DR_14_',
-}
-
 const createRequest = (method, url, data = {}, options = {}) => {
   return new Promise((resolve, reject) => {
     let headers = { 'User-Agent': chooseUserAgent(options.ua) }
@@ -40,9 +28,6 @@ const createRequest = (method, url, data = {}, options = {}) => {
     }
     if (url.includes('music.163.com')) {
       headers['Referer'] = 'https://music.163.com'
-    }
-    if (options.realIP) {
-      headers['X-Real-IP'] = options.realIP
     }
 
     let cookie = options.cookie || {}
